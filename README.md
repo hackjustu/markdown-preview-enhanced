@@ -1,14 +1,14 @@
 # Markdown Preview Enhanced
 
 >**Note:**
->This branch improves the image exportion feature. It can export images with a higher resolution and smaller size.
 >
-> To install the package with this branch:
-> 1. downlaod this branch to a folder named `markdown-preview-enhanced`
+>This branch improves the image exportion feature. It can export images with a higher resolution and smaller size. To install the package with this branch:
 >
-> 2. run `npm install` to get dependencies
+> 1) downlaod this branch to a folder named `markdown-preview-enhanced`
 >
-> 3. copy this folder to `~/.atom/packages`
+> 2) run `npm install` to get dependencies
+>
+> 3) copy this folder to `~/.atom/packages`
 
 
 
