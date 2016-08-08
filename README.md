@@ -11,7 +11,10 @@
 > 3) run `npm install` inside _dependencies/html-pdf_ to get its dependencies
 >
 > 4) copy this folder to `~/.atom/packages`
+>
+> Then we should be able to specify the viewport based on the selected device as shown below.
 
+![](./screenshots/viewport.png)
 
 
 ===
