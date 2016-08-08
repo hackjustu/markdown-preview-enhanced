@@ -949,8 +949,8 @@ module.exports = config || {}
 
           if fileType isnt "pdf"
             optimizedFile = filePath + "optimized_" + fileName
+            atom.notifications.addInfo "File #{fileName} is under optimization", detail: "path: #{optimizedFile}"
             optimage {inputFile: dist, outputFile: optimizedFile}, (err, res) ->
-              atom.notifications.addInfo "File #{fileName} is under optimization", detail: "path: #{optimizedFile}"
               atom.notifications.addInfo "Done"
           else
               atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"

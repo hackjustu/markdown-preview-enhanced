@@ -6,9 +6,11 @@
 >
 > 1) downlaod this branch to a folder named `markdown-preview-enhanced`
 >
-> 2) run `npm install` to get dependencies
+> 2) run `npm install` inside root directory to get dependencies
 >
-> 3) copy this folder to `~/.atom/packages`
+> 3) run `npm install` inside _dependencies/html-pdf_ to get its dependencies
+>
+> 4) copy this folder to `~/.atom/packages`
 
 
 
