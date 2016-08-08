@@ -121,6 +121,19 @@
       ],
       "order": 80
     },
+    "exportImageViewport": {
+      "title": "export image viewport",
+      "type": "string",
+      "default": "iPhone 6",
+      "enum": [
+        "iPhone 6",
+        "iPhone 6 Plus",
+        "iPhone SE",
+        "iPad mini",
+        "iPad"
+      ],
+      "order": 85
+    },
     "orientation": {
       "title": "Pdf Page Orientation",
       "type": "string",
