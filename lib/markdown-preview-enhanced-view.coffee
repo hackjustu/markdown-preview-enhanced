@@ -4,7 +4,8 @@ path = require 'path'
 fs = require 'fs'
 temp = require 'temp'
 {exec} = require 'child_process'
-pdf = require 'html-pdf'
+pdf = require '../dependencies/html-pdf'
+optimage = require 'optimage'
 
 {getMarkdownPreviewCSS} = require './style'
 plantumlAPI = require './puml'
@@ -932,8 +933,20 @@ module.exports = config || {}
     # get header and footer
     header_footer = @loadPhantomJSHeaderFooterConfig()
 
+    viewport_device = atom.config.get('markdown-preview-enhanced.exportImageViewport')
+    viewport_width = switch
+      when viewport_device == "iPhone 6" then 375
+      when viewport_device == "iPhone 6 Plus" then 414
+      when viewport_device == "iPhone SE" then 320
+      when viewport_device == "iPad mini" then 768
+      when viewport_device == "iPad" then 768
+      else 375 # default to iPhone 6
+
+    zoom_factor = 2.75
+    view_width = viewport_width * zoom_factor
+
     pdf
-      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, quality: '100', header: header_footer.header, footer: header_footer.footer, timeout: 60000}
+      .create htmlContent, {type: fileType, format: format, orientation: orientation, border: margin, viewportSize: {width: view_width, height: 10}, zoomFactor: zoom_factor, quality: '100', header: header_footer.header, footer: header_footer.footer, timeout: 60000}
       .toFile dist, (err, res)=>
         if err
           atom.notifications.addError err
@@ -941,10 +954,17 @@ module.exports = config || {}
         else
           lastIndexOfSlash = dist.lastIndexOf '/' || 0
           fileName = dist.slice(lastIndexOfSlash + 1)
+          filePath = dist.slice(0, lastIndexOfSlash + 1)
 
-          atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
-          if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
-            @openFile dist
+          if fileType isnt "pdf"
+            optimizedFile = filePath + "optimized_" + fileName
+            atom.notifications.addInfo "File #{fileName} is under optimization", detail: "path: #{optimizedFile}"
+            optimage {inputFile: dist, outputFile: optimizedFile}, (err, res) ->
+              atom.notifications.addInfo "Done"
+          else
+              atom.notifications.addInfo "File #{fileName} was created", detail: "path: #{dist}"
+              if atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
+                @openFile dist
 
   ## EBOOK
   generateEbook: (dist)->

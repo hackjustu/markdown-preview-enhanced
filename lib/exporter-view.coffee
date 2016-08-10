@@ -78,7 +78,15 @@ class ExporterView extends View
           @option 'png'
           @option 'jpeg'
         @br()
-        @label 'Format'
+        @label 'Viewport (png/jpeg)'
+        @select class: 'viewport-select', =>
+          @option 'iPhone 6'
+          @option 'iPhone 6 Plus'
+          @option 'iPhone SE'
+          @option 'iPad mini'
+          @option 'iPad'
+        @br()
+        @label 'Format (pdf)'
         @select class: 'format-select', =>
           @option 'A3'
           @option 'A4'
@@ -87,12 +95,12 @@ class ExporterView extends View
           @option 'Letter'
           @option 'Tabloid'
         @br()
-        @label 'Orientation'
+        @label 'Orientation (pdf)'
         @select class: 'orientation-select', =>
           @option 'portrait'
           @option 'landscape'
         @br()
-        @label 'Margin'
+        @label 'Margin (pdf)'
         @subview 'marginInput', new TextEditorView(mini: true, placeholderText: '1cm')
         @br()
         @a class: 'header-footer-config', 'click me to open header and footer config'
@@ -179,6 +187,8 @@ class ExporterView extends View
 
       $('.pdf-div .format-select', @element).val atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
 
+      $('.pdf-div .format-select', @element).val atom.config.get('markdown-preview-enhanced.exportImageViewport')
+
       $('.pdf-div .orientation-select', @element).val atom.config.get('markdown-preview-enhanced.orientation')
 
       $('.pdf-div .margin-select', @element).val atom.config.get('markdown-preview-enhanced.marginsType')
@@ -192,6 +202,9 @@ class ExporterView extends View
     ## select
     $('.pdf-div .format-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.exportPDFPageFormat', this.value)
+
+    $('.pdf-div .viewport-select', @element).on 'change', (e)->
+      atom.config.set('markdown-preview-enhanced.exportImageViewport', this.value)
 
     $('.pdf-div .orientation-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.orientation', this.value)
@@ -232,6 +245,8 @@ class ExporterView extends View
 
       $('.phantomjs-div .format-select', @element).val atom.config.get('markdown-preview-enhanced.exportPDFPageFormat')
 
+      $('.phantomjs-div .viewport-select', @element).val atom.config.get('markdown-preview-enhanced.exportImageViewport')
+
       $('.phantomjs-div .orientation-select', @element).val atom.config.get('markdown-preview-enhanced.orientation')
 
       $('.phantomjs-div .pdf-auto-open-checkbox', @element)[0].checked = atom.config.get('markdown-preview-enhanced.pdfOpenAutomatically')
@@ -246,6 +261,9 @@ class ExporterView extends View
 
     $('.phantomjs-div .format-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.exportPDFPageFormat', this.value)
+
+    $('.phantomjs-div .viewport-select', @element).on 'change', (e)->
+      atom.config.set('markdown-preview-enhanced.exportImageViewport', this.value)
 
     $('.phantomjs-div .orientation-select', @element).on 'change', (e)->
       atom.config.set('markdown-preview-enhanced.orientation', this.value)
